@@ -1,0 +1,344 @@
+/* ======================================================================== */
+/* === 1. TEMEL AYARLAR VE CSS RESET =================================== */
+/* ======================================================================== */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  height: 100%;
+  overflow: hidden; /* Kaydırmayı body'e devretmek için */
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  color: #E5E7EB;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  
+  /* Arka Plan */
+  background: linear-gradient(-45deg, #0d122b, #1a2a6c, #b21f1f, #fdbb2d);
+  background-size: 400% 400%;
+  animation: gradient-animation 15s ease infinite;
+  background-attachment: fixed;
+
+  /* SCROLL SNAP KAPSAYICISI */
+  height: 100%;
+  overflow-y: scroll;
+  scroll-snap-type: y mandatory;
+}
+
+/* Arka plan gradyan animasyonu */
+@keyframes gradient-animation {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+
+/* ======================================================================== */
+/* === 2. SCROLL SNAP BÖLÜMLERİ VE GENEL YAPI ============================ */
+/* ======================================================================== */
+
+/* Header, Section ve Footer ana kaydırma elemanlarıdır */
+header, section, footer {
+  height: 100vh;
+  min-height: 100vh;
+  width: 100%;
+  scroll-snap-align: start; /* Her bölümün üstü ekranın üstüne yapışır */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+  position: relative;
+}
+
+.container {
+  max-width: 1100px;
+  width: 100%;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.section-title {
+  font-size: 2.5rem;
+  margin-bottom: 2rem;
+  font-weight: 700;
+}
+
+
+/* ======================================================================== */
+/* === 3. HEADER VE NAVİGASYON ========================================== */
+/* ======================================================================== */
+
+header {
+  position: absolute; /* Sayfa akışından çıkar, diğer bölümlerin üzerinde durur */
+  top: 0;
+  left: 0;
+  right: 0;
+  height: auto; /* İçeriğe göre yükseklik alır */
+  min-height: auto;
+  justify-content: flex-end; /* İçeriği sağa yaslar */
+  align-items: flex-end;
+  z-index: 100;
+  background: none; /* Header'ın kendi arka planı olmamalı */
+  padding: 25px 40px;
+}
+
+nav.glass-effect {
+  background: rgba(30, 30, 40, 0.5);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  border-radius: 18px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  padding: 0.5rem 2rem;
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  gap: 25px;
+}
+
+nav a {
+  position: relative;
+  text-decoration: none;
+  color: #E5E7EB;
+  font-weight: 500;
+  padding-bottom: 8px;
+  transition: color 0.3s ease;
+}
+
+nav a:hover {
+  color: #FFF;
+}
+
+nav a::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 2px;
+  background-color: #fffb00;
+  bottom: 0;
+  left: 0;
+  transition: width 0.4s ease;
+}
+
+nav a:hover::after {
+  width: 100%;
+}
+
+
+/* ======================================================================== */
+/* === 4. BÖLÜMLER (HERO, PRODUCTS, FOOTER) ============================== */
+/* ======================================================================== */
+
+/* --- HERO BÖLÜMÜ --- */
+#hero {
+    align-items: flex-start;
+    padding-left: 10%;
+}
+
+.hero-title {
+    font-size: clamp(3rem, 8vw, 8rem);
+    font-weight: 900;
+    line-height: 1.1;
+    color: #f3f4f6;
+    text-shadow: 0 8px 32px rgba(0,0,0,0.22);
+}
+
+/* --- PROJELER BÖLÜMÜ VE KARTLAR --- */
+.projeler-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
+}
+
+/* Kenarlık animasyonları artık kullanılmıyor */
+/*
+@property --angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@keyframes border-spin {
+  to { --angle: 360deg; }
+}
+*/
+
+.proje-karti {
+  position: relative;
+  min-height: 250px;
+  border-radius: 20px;
+  color: #ffffff;
+  overflow: hidden;
+  z-index: 1;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  
+  /* FROSTED GLASS EFEKTİ */
+  background: rgba(30, 35, 50, 0.4);
+  -webkit-backdrop-filter: blur(15px);
+  backdrop-filter: blur(15px);
+  
+  /* GÖLGE */
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+
+  /* ANİMASYONLU SİYAH IŞIK KENARLIK KALDIRILDI */
+  border: none;
+  
+  transition: transform 0.3s ease;
+}
+
+.proje-karti:hover {
+  transform: translateY(-8px);
+}
+
+.proje-karti::before {
+  display: none; /* Eski renkli çerçeveyi tamamen devre dışı bırak */
+}
+
+.product-card__title {
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.product-card__description {
+  font-size: 0.85rem;
+  color: #b8c1ec;
+  margin-top: 10px;
+}
+
+/* --- FOOTER VE İLETİŞİM FORMU --- */
+footer#iletisim {
+    background-color: rgba(17, 24, 39, 0.8);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  max-width: 600px;
+  width: 100%;
+  margin: 0 auto; /* Formu yatayda ortalamak için */
+}
+
+.contact-form input,
+.contact-form textarea {
+  width: 100%;
+  padding: 15px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  color: #FFF;
+  font-family: 'Poppins', sans-serif;
+}
+
+.contact-form input::placeholder,
+.contact-form textarea::placeholder {
+  color: #9CA3AF;
+}
+
+.btn {
+  padding: 15px;
+  border: none;
+  border-radius: 8px;
+  background-color: #38BDF8;
+  color: #111827;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+  background-color: #7DD3FC;
+}
+
+.copyright {
+  font-size: 0.9rem;
+  color: #6B7280;
+  margin-top: 40px;
+}
+
+/* ======================================================================== */
+/* === 5. DİĞER BİLEŞENLER (SOSYAL MEDYA, ANİMASYONLAR) ================== */
+/* ======================================================================== */
+
+.social-links {
+  position: fixed;
+  bottom: 40px;
+  right: 40px;
+  z-index: 1000;
+  background: rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 50px;
+  padding: 25px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.social-links a {
+  color: #cccccc;
+  transition: color 0.3s ease, transform 0.3s ease;
+  display: block;
+}
+
+.social-links a:hover {
+  transform: scale(1.15);
+}
+
+.social-links svg {
+  width: 28px;
+  height: 28px;
+  fill: currentColor;
+}
+
+.fade-in {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.fade-in.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* MOBİL CİHAZLAR İÇİN AYARLAMALAR */
+@media (max-width: 700px) {
+  header {
+    padding: 1rem;
+    justify-content: center;
+    align-items: center;
+  }
+  .social-links {
+    bottom: 1rem;
+    right: 1rem;
+    padding: 1rem;
+    gap: 1rem;
+  }
+  .social-links svg {
+      width: 24px;
+      height: 24px;
+  }
+  .hero-title {
+      text-align: center;
+  }
+  #hero {
+      padding-left: 0;
+  }
+} 

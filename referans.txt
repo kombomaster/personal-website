@@ -1,0 +1,189 @@
+Elbette, anladım. Mevcut "Projelerim" bölümünüzdeki iç içe girmiş yapıyı düzeltecek ve hem projelere hem de genel kapsayıcıya modern bir "glassmorphism" (cam efekti) uygulayacağız. Ayrıca, bir önceki isteğinizdeki gibi fareyle üzerine gelince oluşan parlama efektini de koruyacağız.
+İşte size bu tasarımı gerçekleştirmeniz için gereken HTML, CSS ve JavaScript kodları.
+1. Adım: HTML Yapısını Düzenleyin
+Öncelikle HTML yapınızı daha düzenli ve yönetilebilir hale getirelim. Projelerinizi bir grid (ızgara) yapısı içinde sunmak, hem düzenli görünmelerini sağlar hem de farklı ekran boyutlarına kolayca uyum sağlar.
+Generated html
+<section id="projelerim">
+  <div class="container">
+    <h2>Projelerim</h2>
+    <div class="projeler-grid">
+      <!-- Proje 1 -->
+      <div class="proje-kart">
+        <div class="proje-icerik">
+          <h3>Proje 1</h3>
+          <p>Kısa açıklama: Bu bir örnek projedir.</p>
+        </div>
+      </div>
+
+      <!-- Proje 2 -->
+      <div class="proje-kart">
+        <div class="proje-icerik">
+          <h3>Proje 2</h3>
+          <p>Kısa açıklama: Bu bir başka örnek projedir.</p>
+        </div>
+      </div>
+
+      <!-- Proje 3 -->
+      <div class="proje-kart">
+        <div class="proje-icerik">
+          <h3>Proje 3</h3>
+          <p>Kısa açıklama: Üçüncü örnek proje.</p>
+        </div>
+      </div>
+
+      <!-- Proje 4 -->
+      <div class="proje-kart">
+        <div class="proje-icerik">
+          <h3>Proje 4</h3>
+          <p>Kısa açıklama: Dördüncü örnek proje.</p>
+        </div>
+      </div>
+
+      <!-- Proje 5 -->
+      <div class="proje-kart">
+        <div class="proje-icerik">
+          <h3>Proje 5</h3>
+          <p>Kısa açıklama: Beşinci örnek proje.</p>
+        </div>
+      </div>
+
+      <!-- Proje 6 -->
+      <div class="proje-kart">
+        <div class="proje-icerik">
+          <h3>Proje 6</h3>
+          <p>Kısa açıklama: Altıncı örnek proje.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+Use code with caution.
+Html
+2. Adım: CSS Kodlarını Ekleyin
+Bu CSS kodları, sayfa arka planını, "Projelerim" başlığını, kartların ızgara düzenini ve en önemlisi her bir karta glassmorphism ve gradyan kenarlık efektini uygulayacaktır.
+Generated css
+/* Sayfa Genel Stilleri */
+body {
+  background-color: #12182b; /* Koyu mavi arka plan */
+  color: #fff;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  padding: 40px;
+}
+
+/* Ana Konteyner */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+#projelerim h2 {
+  font-size: 2.5rem;
+  margin-bottom: 40px;
+}
+
+/* Proje Kartları İçin Izgara Düzeni */
+.projeler-grid {
+  display: grid;
+  /* Ekran boyutuna göre 2 veya 3 sütunlu yapar */
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 3rem; /* Kartlar arası boşluk */
+}
+
+/* Proje Kartı Ana Stili */
+.proje-kart {
+  position: relative; /* Gradyan kenarlık ve parlama için gerekli */
+  border-radius: 16px;
+  overflow: hidden; /* Kenarlığın dışarı taşmasını engeller */
+  cursor: pointer;
+  
+  /* --- Cam Efekti (Glassmorphism) --- */
+  background: rgba(30, 37, 68, 0.4); /* Yarı saydam arka plan */
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1); /* İnce kenarlık */
+}
+
+/* --- Gradyan Kenarlık Efekti --- */
+.proje-kart::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0; /* İçeriğin arkasında kalması için */
+  
+  /* Resimdeki gibi renkli gradyan */
+  background: conic-gradient(
+    from 180deg at 50% 50%,
+    #e70099, #5c00e6, #009ce5, #00d7a3, #e70099
+  );
+  
+  transition: transform 0.3s ease;
+}
+
+/* --- Fareyle Üzerine Gelince Parlama Efekti --- */
+.proje-kart::after {
+  content: '';
+  position: absolute;
+  left: var(--x, 50%); /* JS'den gelen fare pozisyonu */
+  top: var(--y, 50%);  /* JS'den gelen fare pozisyonu */
+  transform: translate(-50%, -50%);
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.2) 0%, transparent 70%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.proje-kart:hover::after {
+  opacity: 1; /* Parlamayı görünür yap */
+}
+
+/* Kart İçeriği */
+.proje-icerik {
+  position: relative; /* Kenarlık ve parlamanın üzerinde kalması için */
+  z-index: 1;
+  padding: 40px 20px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.proje-icerik h3 {
+  margin-top: 0;
+  font-size: 1.5rem;
+}
+
+.proje-icerik p {
+  font-size: 1rem;
+  opacity: 0.8;
+}
+Use code with caution.
+Css
+3. Adım: JavaScript Kodunu Ekleyin
+Bu JavaScript kodu, her bir kart üzerinde farenin konumunu algılayarak CSS'teki parlama efektinin (::after elemanı) yerini dinamik olarak değiştirir.
+Generated javascript
+document.addEventListener('DOMContentLoaded', () => {
+  const cards = document.querySelectorAll('.proje-kart');
+
+  cards.forEach(card => {
+    card.addEventListener('mousemove', (e) => {
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+
+      card.style.setProperty('--x', `${x}px`);
+      card.style.setProperty('--y', `${y}px`);
+    });
+  });
+});
+Use code with caution.
+JavaScript
+Nasıl Kullanılır?
+HTML: Yukarıdaki <section id="projelerim">...</section> kod bloğunu sayfanızın <body> etiketleri arasına, projelerinizi göstermek istediğiniz yere yapıştırın.
+CSS: CSS kodlarını, sitenizin <style> etiketleri arasına veya harici CSS dosyanıza ekleyin.
+JavaScript: JS kodunu, </body> etiketinden hemen önce bir <script> etiketi içine yerleştirin.

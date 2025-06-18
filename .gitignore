@@ -1,0 +1,12 @@
+# Dependencies
+/node_modules
+
+# Vercel
+.vercel
+.output
+
+# Mac
+.DS_Store
+
+# Windows
+Thumbs.db 

@@ -1,0 +1,65 @@
+/*
+  BU KODU KULLANIN.
+  `.proje-karti` seçicisini kendi projenizdeki class adıyla değiştirebilirsiniz.
+*/
+
+.proje-karti {
+  position: relative; /* Gradyan kenarlık için gerekli */
+  padding: 30px;
+  border-radius: 20px; /* Kenar yuvarlaklığı */
+  color: #ffffff;
+  overflow: hidden; /* Gradyanın köşelerden taşmasını engeller */
+  z-index: 1;
+
+  /* --- 1. ŞEFFAF CAM ETKİSİ (SORUNUN ÇÖZÜMÜ BURADA) --- */
+  
+  /* ARKA PLAN: Katı siyah yerine, beyaz rengin %15 opaklığında. 
+     Bu, hem şeffaflık sağlar hem de arkadaki renkleri hafifçe aydınlatır. */
+  background: rgba(255, 255, 255, 0.15);
+  
+  /* ARKAYI BULANIKLAŞTIRMA: Buzlu cam efektini veren en önemli kısım. */
+  -webkit-backdrop-filter: blur(12px); /* Safari ve Chrome için */
+  backdrop-filter: blur(12px);
+
+  /* --- 2. IŞIK VE GÖLGE --- */
+
+  /* DERİNLİK HİSSİ: Kartı zeminden ayırmak için hafif bir gölge. */
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+
+  /* PARLAK KENAR: Işığı yakalayan ince bir çerçeve. */
+  border: 1px solid rgba(255, 255, 255, 0.18);
+
+  /* Üzerine gelince hafifçe yukarı kalkma efekti */
+  transition: transform 0.3s ease;
+}
+
+.proje-karti:hover {
+  transform: translateY(-8px);
+}
+
+/* --- 3. RENKLİ GRADYAN DIŞ KENARLIK --- */
+/* Bu kısım, kartın arkasına gradyan bir katman ekleyerek renkli çerçeve oluşturur. */
+.proje-karti::before {
+  content: '';
+  position: absolute;
+  top: 0; 
+  left: 0;
+  z-index: -1; /* Kartın ve içeriğinin arkasına gönderilir */
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #f977d8, #a364f7, #6965f7, #53a7f5, #57d9f3);
+}
+
+/* Kartın içindeki metinler */
+.proje-karti h3, .proje-karti p {
+  text-shadow: 0 1px 3px rgba(0,0,0,0.2); /* Okunabilirliği artırmak için metin gölgesi */
+}
+Use code with caution.
+Css
+Cursor Programına Ne Demelisiniz?
+Cursor'a doğru komutu vermek, istediğiniz sonucu almanın anahtarıdır. İşte ona vermeniz gereken net ve detaylı komut:
+"Mevcut .proje-karti CSS'imi düzeltmeni istiyorum. Kartlar şu anda siyah ve opak görünüyor, ben ise şeffaf bir glassmorphism efekti istiyorum.
+Kartın background özelliğini katı bir renk olmaktan çıkar. Bunun yerine rgba(255, 255, 255, 0.15) gibi düşük opaklıklı, açık bir renk kullan. Bu, arkadaki planın görünmesini sağlayacak.
+Efektin tamamlanması için mutlaka backdrop-filter: blur(12px) özelliğini ekleyerek arkadaki görüntüyü bulanıklaştır.
+Derinlik hissi için hafif bir box-shadow ve ışığı yansıtması için 1px kalınlığında, yarı saydam beyaz bir border ekle.
+Mevcut renkli gradyan kenarlık mantığını koru."
