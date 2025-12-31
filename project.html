@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Details | Berkay</title>
+
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Project details and description.">
+    <meta name="author" content="Berkay">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="favicon.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+
+    <style>
+        /* Project Detail Specific Styles */
+        .project-detail {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 4rem 2rem;
+        }
+
+        .project-container {
+            max-width: 800px;
+            width: 100%;
+            background: var(--card-bg);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border-radius: 24px;
+            padding: 3rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            margin-bottom: 2rem;
+            font-size: 0.9rem;
+            transition: color 0.3s ease;
+        }
+
+        .back-link:hover {
+            color: var(--text-primary);
+        }
+
+        .project-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .project-meta {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .project-tag {
+            background: rgba(99, 102, 241, 0.2);
+            color: #6366f1;
+            padding: 6px 16px;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .project-description {
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin-bottom: 2rem;
+        }
+
+        .project-links {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .project-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 24px;
+            background: var(--btn-bg);
+            color: #111827;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .project-btn:hover {
+            background: var(--btn-hover);
+            transform: translateY(-2px);
+        }
+
+        .project-btn.secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-primary);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .project-btn.secondary:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .not-found {
+            text-align: center;
+        }
+
+        .not-found h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Loading Spinner -->
+    <div class="loader-wrapper" id="loader">
+        <div class="loader"></div>
+        <span class="loader-text">Loading...</span>
+    </div>
+
+    <main class="project-detail">
+        <div class="project-container" id="projectContent">
+            <!-- Content will be loaded by JavaScript -->
+        </div>
+    </main>
+
+    <script>
+        // Project data
+        const projects = [
+            {
+                id: 1,
+                name: 'Project 1',
+                description: 'Description coming soon',
+                fullDescription: 'Detailed project description will be added here. Technologies used, goals, and outcomes can be shared in this section.',
+                tags: ['Web', 'JavaScript'],
+                github: '#',
+                demo: '#'
+            },
+            {
+                id: 2,
+                name: 'Project 2',
+                description: 'Description coming soon',
+                fullDescription: 'Detailed project description will be added here. Technologies used, goals, and outcomes can be shared in this section.',
+                tags: ['Mobile', 'React Native'],
+                github: '#',
+                demo: '#'
+            },
+            {
+                id: 3,
+                name: 'Project 3',
+                description: 'Description coming soon',
+                fullDescription: 'Detailed project description will be added here. Technologies used, goals, and outcomes can be shared in this section.',
+                tags: ['API', 'Node.js'],
+                github: '#',
+                demo: '#'
+            }
+        ];
+
+        // Get project ID from URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const projectId = parseInt(urlParams.get('id'));
+        const project = projects.find(p => p.id === projectId);
+
+        const container = document.getElementById('projectContent');
+
+        if (project) {
+            document.title = `${project.name} | Berkay`;
+            container.innerHTML = `
+                <a href="index.html#projects" class="back-link">← Back to Projects</a>
+                <h1 class="project-title">${project.name}</h1>
+                <div class="project-meta">
+                    ${project.tags.map(tag => `<span class="project-tag">${tag}</span>`).join('')}
+                </div>
+                <p class="project-description">${project.fullDescription}</p>
+                <div class="project-links">
+                    <a href="${project.github}" class="project-btn secondary" target="_blank">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+                        GitHub
+                    </a>
+                    <a href="${project.demo}" class="project-btn" target="_blank">
+                        View Demo
+                    </a>
+                </div>
+            `;
+        } else {
+            container.innerHTML = `
+                <div class="not-found">
+                    <h2>Project Not Found</h2>
+                    <p>The project you are looking for does not exist.</p>
+                    <a href="index.html" class="project-btn" style="margin-top: 1rem; display: inline-block;">Back to Home</a>
+                </div>
+            `;
+        }
+
+        // Hide loader
+        window.addEventListener('load', () => {
+            const loader = document.getElementById('loader');
+            if (loader) {
+                setTimeout(() => loader.classList.add('hidden'), 300);
+            }
+        });
+    </script>
+</body>
+
+</html>
